@@ -46,7 +46,7 @@ nomnoml.transformParseIntoSyntaxTree = function (){
 	}
 
 	function transformClassifier(entity){
-		var compartmentProperties = nomnoml.Compartment(_.map(entity.properties, transformCompartment), [], [])
+		var compartmentProperties = nomnoml.Compartment(_.map(entity.properties, transformProperties), [], [])
 		var compartmentName = nomnoml.Compartment([entity.name], [], [])		
 		return nomnoml.Classifier("CLASS", entity.name, concat(compartmentName,compartmentProperties))		
 	}
