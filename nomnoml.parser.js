@@ -26,19 +26,17 @@ nomnoml.transformParseIntoSyntaxTree = function (){
 
 	var relationId = 0
 
-	function transformRelations(adjacency){
-		return  {
+	
+	function transformAdjacencies(entity){
+		_.map(entity.adjacencies, function(adjacency){ 
+			return {
             id: 0,
             assoc: '-',
             start: entity.name,
             end: adjacency.end,
             startLabel: adjacency.name,
             endLabel: ""
-        }
-	}
-
-	function transformAdjacencies(entity){
-		_.map(entity.adjacencies, transformRelations)
+        } })
 	}
     
 	function transformProperties(propertie){
@@ -48,7 +46,7 @@ nomnoml.transformParseIntoSyntaxTree = function (){
 	function transformClassifier(entity){
 		var compartmentProperties = nomnoml.Compartment(_.map(entity.properties, transformProperties), [], [])
 		var compartmentName = nomnoml.Compartment([entity.name], [], [])		
-		return nomnoml.Classifier("CLASS", entity.name, compartmentName.concat(compartmentProperties))		
+		return nomnoml.Classifier("CLASS", entity.name, [compartmentName,compartmentProperties])		
 	}
 
 	return $.getJSON('http://localhost:9002/schema',function(data){
